@@ -26,14 +26,7 @@ keybinds clear-defaults=true {
         bind "r" { NewPane "right"; SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "z" { TogglePaneFrames; SwitchToMode "normal"; }
-        bind "+" {
-            NewPane "down";         NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            NewPane "right";        NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            MoveFocus "up";         NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            NewPane "right";        NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            MoveFocus "left";       NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            SwitchToMode "normal";  NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-        }
+        bind "+" { FourifyPane; SwitchToMode "normal"; }
     }
     tab {
         bind "left" { GoToPreviousTab; }

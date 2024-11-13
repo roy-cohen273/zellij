@@ -22,14 +22,7 @@ keybinds clear-defaults=true {
         bind "x" { CloseFocus; SwitchToMode "locked"; }
         bind "z" { TogglePaneFrames; SwitchToMode "locked"; }
         bind "tab" { SwitchFocus; }
-        bind "+" {
-            NewPane "down";         NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            NewPane "right";        NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            MoveFocus "up";         NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            NewPane "right";        NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            MoveFocus "left";       NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-            SwitchToMode "normal";  NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp; NoOp;
-        }
+        bind "+" { FourifyPane; SwitchToMode "normal"; }
     }
     tab {
         bind "left" { GoToPreviousTab; }
