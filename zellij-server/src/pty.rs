@@ -102,6 +102,7 @@ pub enum PtyInstruction {
         default_editor: Option<PathBuf>,
     },
     ListClientsToPlugin(SessionLayoutMetadata, PluginId, ClientId),
+    SendInstructionToScreen(ScreenInstruction),
     Exit,
 }
 
@@ -127,6 +128,7 @@ impl From<&PtyInstruction> for PtyContext {
             PtyInstruction::ListClientsMetadata(..) => PtyContext::ListClientsMetadata,
             PtyInstruction::Reconfigure { .. } => PtyContext::Reconfigure,
             PtyInstruction::ListClientsToPlugin(..) => PtyContext::ListClientsToPlugin,
+            PtyInstruction::SendInstructionToScreen(..) => PtyContext::SendInstructionToScreen,
             PtyInstruction::Exit => PtyContext::Exit,
         }
     }
@@ -797,6 +799,16 @@ pub(crate) fn pty_thread_main(mut pty: Pty, layout: Box<Layout>) -> Result<()> {
             } => {
                 pty.reconfigure(default_editor);
             },
+            PtyInstruction::SendInstructionToScreen(screen_instruction) => {
+                let err_context = {
+                    let screen_instruction = screen_instruction.clone();
+                    move || format!("failed to send screen instruction: {:?}", screen_instruction)
+                };
+                pty.bus
+                    .senders
+                    .send_to_screen(screen_instruction)
+                    .with_context(err_context)?;
+            }
             PtyInstruction::Exit => break,
         }
     }

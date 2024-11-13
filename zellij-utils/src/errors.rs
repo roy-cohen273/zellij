@@ -397,6 +397,7 @@ pub enum PtyContext {
     ListClientsMetadata,
     Reconfigure,
     ListClientsToPlugin,
+    SendInstructionToScreen,
     Exit,
 }
 
