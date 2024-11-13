@@ -564,6 +564,7 @@ impl Action {
                 Ok(Action::Search(search_direction))
             },
             "RenameSession" => Ok(Action::RenameSession(string)),
+            "FourifyPane" => Ok(Action::FourifyPane),
             _ => Err(ConfigError::new_kdl_error(
                 format!("Unsupported action: {}", action_name),
                 action_node.span().offset(),
@@ -1758,6 +1759,11 @@ impl TryFrom<(&KdlNode, &Options)> for Action {
                     plugin_id,
                 })
             },
+            "FourifyPane" => parse_kdl_action_char_or_string_arguments!(
+                action_name,
+                action_arguments,
+                kdl_action
+            ),
             _ => Err(ConfigError::new_kdl_error(
                 format!("Unsupported action: {}", action_name).into(),
                 kdl_action.span().offset(),

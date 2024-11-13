@@ -706,6 +706,10 @@ impl TryFrom<ProtobufAction> for Action {
                     plugin_id: None,
                 }),
             },
+            Some(ProtobufActionName::FourifyPane) => match protobuf_action.optional_payload {
+                Some(_) => Err("FourifyPane should not have a payload"),
+                None => Ok(Action::FourifyPane),
+            },
             _ => Err("Unknown Action"),
         }
     }
@@ -1282,6 +1286,10 @@ impl TryFrom<Action> for ProtobufAction {
             }),
             Action::KeybindPipe { .. } => Ok(ProtobufAction {
                 name: ProtobufActionName::KeybindPipe as i32,
+                optional_payload: None,
+            }),
+            Action::FourifyPane => Ok(ProtobufAction {
+                name: ProtobufActionName::FourifyPane as i32,
                 optional_payload: None,
             }),
             Action::NoOp

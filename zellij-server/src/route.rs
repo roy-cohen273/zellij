@@ -969,6 +969,40 @@ pub(crate) fn route_action(
                 ))
                 .with_context(err_context)?;
         },
+
+        Action::FourifyPane => {
+            // NewPane "down"
+            let shell = default_shell.clone();
+            let pty_instr = PtyInstruction::SpawnTerminalHorizontally(shell, None, client_id);
+            senders.send_to_pty(pty_instr).with_context(err_context)?;
+            std::thread::sleep(std::time::Duration::from_secs(1));
+
+            // NewPane "right"
+            let shell = default_shell.clone();
+            let pty_instr = PtyInstruction::SpawnTerminalVertically(shell, None, client_id);
+            senders.send_to_pty(pty_instr).with_context(err_context)?;
+            std::thread::sleep(std::time::Duration::from_secs(1));
+
+            // MoveFocus "up"
+            let screen_instr = ScreenInstruction::MoveFocusUp(client_id);
+            senders
+                .send_to_screen(screen_instr)
+                .with_context(err_context)?;
+            std::thread::sleep(std::time::Duration::from_secs(1));
+
+            // NewPane "right"
+            let shell = default_shell.clone();
+            let pty_instr = PtyInstruction::SpawnTerminalVertically(shell, None, client_id);
+            senders.send_to_pty(pty_instr).with_context(err_context)?;
+            std::thread::sleep(std::time::Duration::from_secs(1));
+
+            // MoveFocus "left"
+            let screen_instr = ScreenInstruction::MoveFocusLeft(client_id);
+            senders
+                .send_to_screen(screen_instr)
+                .with_context(err_context)?;
+            std::thread::sleep(std::time::Duration::from_secs(1));
+        }
     }
     Ok(should_break)
 }
