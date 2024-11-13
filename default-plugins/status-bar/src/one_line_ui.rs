@@ -1182,7 +1182,7 @@ fn get_keys_and_hints(mi: &ModeInfo) -> Vec<(String, String, Vec<KeyWithModifier
         (s("Toggle Fullscreen"), s("Fullscreen"), single_action_key(&km, &[A::ToggleFocusFullscreen, TO_NORMAL])),
         (s("Toggle Floating"), s("Floating"),
             single_action_key(&km, &[A::ToggleFloatingPanes, TO_NORMAL])),
-        // Roy, come back here later!
+        (s("Fourify Pane"), s("Fourify"), single_action_key(&km, &[A::FourifyPane, TO_NORMAL])),
         (s("Toggle Embed"), s("Embed"), single_action_key(&km, &[A::TogglePaneEmbedOrFloating, TO_NORMAL])),
         (s("Select pane"), s("Select"), to_basemode_key),
     ]} else if mi.mode == IM::Tab {
