@@ -969,6 +969,35 @@ pub(crate) fn route_action(
                 ))
                 .with_context(err_context)?;
         },
+
+        Action::FourifyPane => {
+            // NewPane "down"
+            let shell = default_shell.clone();
+            let pty_instr = PtyInstruction::SpawnTerminalHorizontally(shell, None, client_id);
+            senders.send_to_pty(pty_instr).with_context(err_context)?;
+
+            // NewPane "right"
+            let shell = default_shell.clone();
+            let pty_instr = PtyInstruction::SpawnTerminalVertically(shell, None, client_id);
+            senders.send_to_pty(pty_instr).with_context(err_context)?;
+
+            // MoveFocus "up"
+            let screen_instr = ScreenInstruction::MoveFocusUp(client_id);
+            senders
+                .send_to_pty(PtyInstruction::SendInstructionToScreen(screen_instr))
+                .with_context(err_context)?;
+
+            // NewPane "right"
+            let shell = default_shell.clone();
+            let pty_instr = PtyInstruction::SpawnTerminalVertically(shell, None, client_id);
+            senders.send_to_pty(pty_instr).with_context(err_context)?;
+
+            // MoveFocus "left"
+            let screen_instr = ScreenInstruction::MoveFocusLeft(client_id);
+            senders
+                .send_to_pty(PtyInstruction::SendInstructionToScreen(screen_instr))
+                .with_context(err_context)?;
+        }
     }
     Ok(should_break)
 }

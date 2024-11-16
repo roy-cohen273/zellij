@@ -58,6 +58,7 @@ keybinds clear-defaults=true {
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "c" { SwitchToMode "RenamePane"; PaneNameInput 0; }
+        bind "+" { FourifyPane; SwitchToMode "normal"; }
     }
     tab {
         bind "Ctrl g" { SwitchToMode "locked"; }
